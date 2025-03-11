@@ -214,15 +214,16 @@ namespace Memory
             return returnCode.ToString();
         }
 
-        private int LoadIntCode(string name, string path)
+        private UIntPtr LoadUIntPtrCode(string name, string path)
         {
             try
             {
-                return Convert.ToInt32(LoadCode(name, path), 16);
+                var value = Convert.ToInt32(LoadCode(name, path), 16);
+				return (UIntPtr)value;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"ERROR: LoadIntCode function crashed! {ex}");
+                Debug.WriteLine($"ERROR: LoadUIntPtrCode function crashed! {ex}");
             }
             return 0;
         }
@@ -363,7 +364,7 @@ namespace Memory
 
                 uint num1 = BitConverter.ToUInt32(memoryAddress, 0); //ToUInt64 causes arithmetic overflow.
 
-                UIntPtr base1 = (UIntPtr)0;
+                UIntPtr base1 = UIntPtr.Zero;
 
                 for (int i = 1; i < offsets.Length; i++)
                 {
@@ -563,7 +564,7 @@ namespace Memory
         /// </summary>
         public void CloseProcess()
         {
-            if (mProc.Handle == null)
+            if (mProc.Handle == IntPtr.Zero)
                 return;
 
             CloseHandle(mProc.Handle);
@@ -599,7 +600,7 @@ namespace Memory
             WriteProcessMemory(mProc.Handle, allocMem, strDllName, (UIntPtr)lenWrite, out bytesout);
             UIntPtr GameProc = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
 
-            if (GameProc == null)
+            if (GameProc == UIntPtr.Zero)
                 return false;
 
             IntPtr hThread = CreateRemoteThread(mProc.Handle, (IntPtr)null, 0, GameProc, allocMem, 0, out bytesout);
@@ -607,13 +608,13 @@ namespace Memory
             int Result = WaitForSingleObject(hThread, 10 * 1000);
             if (Result == 0x00000080L || Result == 0x00000102L)
             {
-                if (hThread != null)
+                if (hThread != IntPtr.Zero)
                     CloseHandle(hThread);
                 return false;
             }
             VirtualFreeEx(mProc.Handle, allocMem, (UIntPtr)0, 0x8000);
 
-            if (hThread != null)
+            if (hThread != IntPtr.Zero)
                 CloseHandle(hThread);
 
             return true;

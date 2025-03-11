@@ -95,7 +95,7 @@ namespace Memory
             UIntPtr theCode;
             theCode = GetCode(code, file);
 
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return false;
 
             if (type.ToLower() == "float")
@@ -168,7 +168,7 @@ namespace Memory
             }
 
             //Debug.Write("DEBUG: Writing bytes [TYPE:" + type + " ADDR:" + theCode + "] " + String.Join(",", memory) + Environment.NewLine);
-            MemoryProtection OldMemProt = 0x00;
+            //MemoryProtection OldMemProt = 0x00;
             bool WriteProcMem = false;
             //if (RemoveWriteProtection)
             //    ChangeProtection(code, MemoryProtection.ExecuteReadWrite, out OldMemProt, file); // change protection

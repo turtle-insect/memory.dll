@@ -39,7 +39,7 @@ namespace Memory
         {
             byte[] memory = new byte[length];
             UIntPtr theCode = GetCode(code, file);
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return null;
 
             if (!ReadProcessMemory(mProc.Handle, theCode, memory, (UIntPtr)length, IntPtr.Zero))
@@ -60,7 +60,7 @@ namespace Memory
             byte[] memory = new byte[4];
 
             UIntPtr theCode = GetCode(code, file);
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return 0;
 
             try
@@ -98,7 +98,7 @@ namespace Memory
 
             byte[] memoryNormal = new byte[length];
             UIntPtr theCode = GetCode(code, file);
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return "";
 
             if (ReadProcessMemory(mProc.Handle, theCode, memoryNormal, (UIntPtr)length, IntPtr.Zero))
@@ -119,7 +119,7 @@ namespace Memory
             byte[] memory = new byte[8];
 
             UIntPtr theCode = GetCode(code, file);
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return 0;
 
             try
@@ -160,7 +160,7 @@ namespace Memory
         {
             byte[] memory = new byte[4];
             UIntPtr theCode = GetCode(code, file);
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return 0;
 
             if (ReadProcessMemory(mProc.Handle, theCode, memory, (UIntPtr)4, IntPtr.Zero))
@@ -180,7 +180,7 @@ namespace Memory
             byte[] memory = new byte[16];
             UIntPtr theCode = GetCode(code, file);
 
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return 0;
 
             if (ReadProcessMemory(mProc.Handle, theCode, memory, (UIntPtr)8, IntPtr.Zero))
@@ -199,7 +199,7 @@ namespace Memory
         {
             byte[] memory = new byte[4];
             UIntPtr theCode = GetCode(code, file);
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return 0;
 
             if (ReadProcessMemory(mProc.Handle, theCode, memory, (UIntPtr)4, IntPtr.Zero))
@@ -219,7 +219,7 @@ namespace Memory
         {
             byte[] memory = new byte[4];
             UIntPtr theCode = GetCode(code, file);
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return 0;
 
             UIntPtr newCode = UIntPtr.Add(theCode, moveQty);
@@ -241,7 +241,7 @@ namespace Memory
         {
             byte[] memory = new byte[4];
             UIntPtr theCode = GetCode(code, file);
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return 0;
 
             UIntPtr newCode = UIntPtr.Add(theCode, moveQty);
@@ -263,7 +263,7 @@ namespace Memory
         {
             byte[] memory = new byte[8];
             UIntPtr theCode = GetCode(code, file, 8);
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return 0;
 
             UIntPtr newCode = UIntPtr.Add(theCode, moveQty);
@@ -285,7 +285,7 @@ namespace Memory
             byte[] memoryTiny = new byte[4];
 
             UIntPtr theCode = GetCode(code, file);
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return 0;
 
             if (ReadProcessMemory(mProc.Handle, theCode, memoryTiny, (UIntPtr)2, IntPtr.Zero))
@@ -305,7 +305,7 @@ namespace Memory
             byte[] memoryTiny = new byte[1];
 
             UIntPtr theCode = GetCode(code, file);
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return 0;
 
             if (ReadProcessMemory(mProc.Handle, theCode, memoryTiny, (UIntPtr)1, IntPtr.Zero))
@@ -328,7 +328,7 @@ namespace Memory
 
             bool[] ret = new bool[8];
 
-            if (theCode == null || theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
+            if (theCode == UIntPtr.Zero || theCode.ToUInt64() < 0x10000)
                 return ret;
 
             if (!ReadProcessMemory(mProc.Handle, theCode, buf, (UIntPtr)1, IntPtr.Zero))
@@ -348,7 +348,7 @@ namespace Memory
         public int ReadPByte(UIntPtr address, string code, string file = "")
         {
             byte[] memory = new byte[4];
-            if (ReadProcessMemory(mProc.Handle, address + LoadIntCode(code, file), memory, (UIntPtr)1, IntPtr.Zero))
+            if (ReadProcessMemory(mProc.Handle, address + LoadUIntPtrCode(code, file), memory, (UIntPtr)1, IntPtr.Zero))
                 return BitConverter.ToInt32(memory, 0);
             else
                 return 0;
@@ -357,7 +357,7 @@ namespace Memory
         public float ReadPFloat(UIntPtr address, string code, string file = "")
         {
             byte[] memory = new byte[4];
-            if (ReadProcessMemory(mProc.Handle, address + LoadIntCode(code, file), memory, (UIntPtr)4, IntPtr.Zero))
+            if (ReadProcessMemory(mProc.Handle, address + LoadUIntPtrCode(code, file), memory, (UIntPtr)4, IntPtr.Zero))
             {
                 float spawn = BitConverter.ToSingle(memory, 0);
                 return (float)Math.Round(spawn, 2);
@@ -369,7 +369,7 @@ namespace Memory
         public int ReadPInt(UIntPtr address, string code, string file = "")
         {
             byte[] memory = new byte[4];
-            if (ReadProcessMemory(mProc.Handle, address + LoadIntCode(code, file), memory, (UIntPtr)4, IntPtr.Zero))
+            if (ReadProcessMemory(mProc.Handle, address + LoadUIntPtrCode(code, file), memory, (UIntPtr)4, IntPtr.Zero))
                 return BitConverter.ToInt32(memory, 0);
             else
                 return 0;
@@ -378,7 +378,7 @@ namespace Memory
         public string ReadPString(UIntPtr address, string code, string file = "")
         {
             byte[] memoryNormal = new byte[32];
-            if (ReadProcessMemory(mProc.Handle, address + LoadIntCode(code, file), memoryNormal, (UIntPtr)32, IntPtr.Zero))
+            if (ReadProcessMemory(mProc.Handle, address + LoadUIntPtrCode(code, file), memoryNormal, (UIntPtr)32, IntPtr.Zero))
                 return CutString(System.Text.Encoding.ASCII.GetString(memoryNormal));
             else
                 return "";
